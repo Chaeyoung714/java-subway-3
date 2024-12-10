@@ -16,6 +16,14 @@ public class Vertex {
         this.time = time;
     }
 
+    public boolean equalsStartStation(Station startStation) {
+        return this.startStation.equals(startStation);
+    }
+
+    public boolean equalsEndStation(Station endStation) {
+        return this.endStation.equals(endStation);
+    }
+
     public Line getLine() {
         return line;
     }

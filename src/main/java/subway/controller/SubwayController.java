@@ -1,12 +1,10 @@
 package subway.controller;
 
 import java.util.List;
-import subway.domain.Station;
 import subway.domain.Vertex;
 import subway.dto.EstimationDto;
 import subway.dto.StationDto;
 import subway.exception.ErrorHandler;
-import subway.repository.StationRepository;
 import subway.service.RetrieveService;
 import subway.service.SubwayService;
 import subway.view.InputHandler;
@@ -28,7 +26,6 @@ public class SubwayController {
 
     public void run() {
         subwayService.registerSubwayInformation();
-        retrieveService.registerSubwayGraph();
         doOneService();
     }
 
@@ -62,19 +59,18 @@ public class SubwayController {
             String endStation = inputHandler.readEndStation();
             StationDto stationDto = subwayService.registerDestination(startStation, endStation);
             if (choice.equals("1")) {
-                return retrieveService.retrievePathByDistance(
-                        stationDto.getStartStation(), stationDto.getEndStation());
+                return retrieveService.retrieveShortestPath(
+                        stationDto.getStartStation(), stationDto.getEndStation(), Vertex::getDistance);
             }
             if (choice.equals("2")) {
-                return retrieveService.retrievePathByTime(
-                        stationDto.getStartStation(), stationDto.getEndStation());
+                return retrieveService.retrieveShortestPath(
+                        stationDto.getStartStation(), stationDto.getEndStation(), Vertex::getTime);
             }
             return null; //TODO : 보완
         } catch (IllegalArgumentException e) {
-//            ErrorHandler.handleUserError(e);
-            throw e;
-//            doPathwayService();
-//            return null; //TODO : 보완
+            ErrorHandler.handleUserError(e);
+            doPathwayService();
+            return null; //TODO : 보완
         }
     }
 }
