@@ -2,6 +2,7 @@ package subway;
 
 import java.util.Scanner;
 import subway.controller.SubwayController;
+import subway.service.RetrieveService;
 import subway.service.SubwayService;
 import subway.view.InputHandler;
 import subway.view.InputView;
@@ -19,6 +20,7 @@ public class DependencyConfig {
                 new InputHandler(new InputView(scanner))
                 , new OutputView()
                 , new SubwayService()
+                , new RetrieveService()
         );
     }
 }
