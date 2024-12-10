@@ -20,4 +20,10 @@ public class InputValidator {
             throw new IllegalArgumentException("올바른 값을 입력해주세요.");
         }
     }
+
+    public static void validateInputValue(String answer) {
+        if (answer == null || answer.isBlank()) {
+            throw new IllegalArgumentException("값을 입력해주세요.");
+        }
+    }
 }

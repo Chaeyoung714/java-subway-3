@@ -26,7 +26,7 @@ public class VertexRepository {
                 .orElseThrow(IllegalStateException::new);
     }
 
-    public static List<Vertex> findAllStationsFromStartStation(Station firstStation) {
+    public static List<Vertex> findAllVertexesFromFirstStation(Station firstStation) {
         List<Vertex> availablePaths = new ArrayList<>();
         List<Station> visitedStations = new ArrayList<>();
         Queue<Station> startStations = new LinkedList();

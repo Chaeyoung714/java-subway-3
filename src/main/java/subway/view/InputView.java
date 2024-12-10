@@ -10,18 +10,18 @@ public class InputView {
     }
 
     public String readFunctionChoice() {
-        System.out.println(System.lineSeparator() + "## 메인 화면\n"
-                + "1. 경로 조회\n"
-                + "Q. 종료");
+        System.out.println(System.lineSeparator() + "## 메인 화면"
+                + System.lineSeparator() + "1. 경로 조회"
+                + System.lineSeparator() + "Q. 종료");
         System.out.println(System.lineSeparator() + "## 원하는 기능을 선택하세요.");
         return scanner.nextLine();
     }
 
     public String readRetrieveChoice() {
-        System.out.println(System.lineSeparator() + "## 경로 기준\n"
-                + "1. 최단 거리\n"
-                + "2. 최소 시간\n"
-                + "B. 돌아가기");
+        System.out.println(System.lineSeparator() + "## 경로 기준"
+                + System.lineSeparator() + "1. 최단 거리"
+                + System.lineSeparator() + "2. 최소 시간"
+                + System.lineSeparator() + "B. 돌아가기");
         System.out.println(System.lineSeparator() + "## 원하는 기능을 선택하세요.");
         return scanner.nextLine();
     }

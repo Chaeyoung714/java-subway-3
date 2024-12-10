@@ -1,7 +1,7 @@
 package subway.view;
 
 
-import subway.exception.RetryHandler;
+import subway.handler.RetryHandler;
 import subway.view.answer.FunctionChoice;
 import subway.view.answer.RetrieveChoice;
 
@@ -31,7 +31,7 @@ public class InputHandler {
     public String readFirstStation() {
         return RetryHandler.retryUntilSuccessAndReturn(() -> {
             String answer = inputView.readFirstStation();
-            //TODO : 검증추가
+            InputValidator.validateInputValue(answer);
             return answer;
         });
     }
@@ -39,7 +39,7 @@ public class InputHandler {
     public String readLastStation() {
         return RetryHandler.retryUntilSuccessAndReturn(() -> {
             String answer = inputView.readLastStation();
-            //TODO : 검증추가
+            InputValidator.validateInputValue(answer);
             return answer;
         });
     }

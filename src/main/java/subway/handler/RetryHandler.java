@@ -1,4 +1,4 @@
-package subway.exception;
+package subway.handler;
 
 import java.util.function.Supplier;
 

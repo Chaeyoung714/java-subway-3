@@ -24,8 +24,12 @@ public class Vertex {
         return this.endStation.equals(endStation);
     }
 
-    public Line getLine() {
-        return line;
+    public String getStartStationName() {
+        return startStation.getName();
+    }
+
+    public String getEndStationName() {
+        return endStation.getName();
     }
 
     public Station getStartStation() {
@@ -42,13 +46,5 @@ public class Vertex {
 
     public int getTime() {
         return time;
-    }
-
-    public String getStartStationName() {
-        return startStation.getName();
-    }
-
-    public String getEndStationName() {
-        return endStation.getName();
     }
 }
