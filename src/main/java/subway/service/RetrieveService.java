@@ -9,6 +9,7 @@ import org.jgrapht.graph.WeightedMultigraph;
 import subway.domain.Station;
 import subway.domain.Vertex;
 import subway.dto.EstimationDto;
+import subway.exception.ExceptionMessages;
 import subway.repository.StationRepository;
 import subway.repository.VertexRepository;
 
@@ -54,7 +55,7 @@ public class RetrieveService {
                 return;
             }
         }
-        throw new IllegalArgumentException("출발역과 도착역은 연결 가능해야 합니다.");
+        throw new IllegalArgumentException(ExceptionMessages.UNCONNECTED_STATIONS.getMessage());
     }
 
     private List<Vertex> transferToVertex(List<String> shortestPath) {

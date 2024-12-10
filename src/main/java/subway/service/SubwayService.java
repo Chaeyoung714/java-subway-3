@@ -4,6 +4,7 @@ import subway.domain.Line;
 import subway.domain.Station;
 import subway.domain.Vertex;
 import subway.dto.StationDto;
+import subway.exception.ExceptionMessages;
 import subway.repository.LineRepository;
 import subway.repository.StationRepository;
 import subway.repository.VertexRepository;
@@ -66,12 +67,12 @@ public class SubwayService {
     public StationDto registerDestination(String startStation, String endStation) {
         try {
             if (startStation.equals(endStation)) {
-                throw new IllegalArgumentException("출발역과 도착역이 동일합니다.");
+                throw new IllegalArgumentException(ExceptionMessages.DUPLICATED_STATIONS.getMessage());
             }
             return new StationDto(StationRepository.findStationByName(startStation),
                     StationRepository.findStationByName(endStation));
         } catch (IllegalStateException e) {
-            throw new IllegalArgumentException("존재하지 않는 역입니다.");
+            throw new IllegalArgumentException(ExceptionMessages.STATION_NOT_EXISTS.getMessage());
         }
     }
 }

@@ -3,6 +3,7 @@ package subway;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import org.junit.jupiter.api.Test;
+import subway.exception.ExceptionMessages;
 import subway.view.InputValidator;
 
 public class InputValidationTest {
@@ -13,7 +14,7 @@ public class InputValidationTest {
 
         assertThatThrownBy(() -> InputValidator.validateFunctionChoice(wrongInput))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("올바른 값을 입력해주세요.");
+                .hasMessage(ExceptionMessages.WRONG_CHOICE_INPUT.getMessage());
     }
 
     @Test
@@ -22,7 +23,7 @@ public class InputValidationTest {
 
         assertThatThrownBy(() -> InputValidator.validateRetrieveChoice(wrongInput))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("올바른 값을 입력해주세요.");
+                .hasMessage(ExceptionMessages.WRONG_CHOICE_INPUT.getMessage());
     }
 
     @Test
@@ -31,6 +32,6 @@ public class InputValidationTest {
 
         assertThatThrownBy(() -> InputValidator.validateInputValue(wrongInput))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("값을 입력해주세요.");
+                .hasMessage(ExceptionMessages.WRONG_VALUE_INPUT.getMessage());
     }
 }

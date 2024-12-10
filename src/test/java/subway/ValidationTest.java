@@ -6,10 +6,10 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import subway.domain.Station;
 import subway.domain.Vertex;
+import subway.exception.ExceptionMessages;
 import subway.repository.StationRepository;
 import subway.service.RetrieveService;
 import subway.service.SubwayService;
-import subway.view.InputValidator;
 
 public class ValidationTest {
     private static SubwayService subwayService = new SubwayService();;
@@ -26,7 +26,7 @@ public class ValidationTest {
         Station endStation = StationRepository.findStationByName("양재역");
         assertThatThrownBy(() -> retrieveService.retrieveShortestPath(startStation, endStation, Vertex::getDistance))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("출발역과 도착역은 연결 가능해야 합니다.");
+                .hasMessage(ExceptionMessages.UNCONNECTED_STATIONS.getMessage());
     }
 
     @Test
@@ -34,7 +34,7 @@ public class ValidationTest {
         String testName = "양재역";
         assertThatThrownBy(() -> subwayService.registerDestination(testName, testName))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("출발역과 도착역이 동일합니다.");
+                .hasMessage(ExceptionMessages.DUPLICATED_STATIONS.getMessage());
     }
 
     @Test
@@ -42,6 +42,6 @@ public class ValidationTest {
         String testName = "양재재역";
         assertThatThrownBy(() -> subwayService.registerDestination(testName, "양재시민의숲역"))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("존재하지 않는 역입니다.");
+                .hasMessage(ExceptionMessages.STATION_NOT_EXISTS.getMessage());
     }
 }
