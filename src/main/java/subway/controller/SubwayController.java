@@ -61,14 +61,7 @@ public class SubwayController {
         String firstStation = inputHandler.readFirstStation();
         String lastStation = inputHandler.readLastStation();
         StationDto stationDto = subwayService.registerDestination(firstStation, lastStation);
-        if (choice.equals(RetrieveChoice.BY_DISTANCE)) {
-            return retrieveService.retrieveShortestPath(
-                    stationDto.getFirstStation(), stationDto.getLastStation(), Vertex::getDistance);
-        }
-        if (choice.equals(RetrieveChoice.BY_TIME)) {
-            return retrieveService.retrieveShortestPath(
-                    stationDto.getFirstStation(), stationDto.getLastStation(), Vertex::getTime);
-        }
-        throw new IllegalStateException();
+        return retrieveService.retrieveShortestPath(stationDto.getFirstStation(), stationDto.getLastStation(),
+                choice.getRetrieveCriteria());
     }
 }

@@ -1,17 +1,20 @@
 package subway.view.answer;
 
 import java.util.Arrays;
+import subway.domain.Criteria;
 
 public enum RetrieveChoice {
-    BY_DISTANCE("1"),
-    BY_TIME("2"),
-    BACK("B"),
+    BY_DISTANCE("1", Criteria.DISTANCE),
+    BY_TIME("2", Criteria.TIME),
+    BACK("B", null),
     ;
 
     private final String inputValue;
+    private final Criteria retrieveCriteria;
 
-    RetrieveChoice(String inputValue) {
+    RetrieveChoice(String inputValue, Criteria retrieveCriteria) {
         this.inputValue = inputValue;
+        this.retrieveCriteria = retrieveCriteria;
     }
 
     public static RetrieveChoice findByInputValue(String inputValue) {
@@ -23,5 +26,12 @@ public enum RetrieveChoice {
 
     private String getInputValue() {
         return inputValue;
+    }
+
+    public Criteria getRetrieveCriteria() {
+        if (retrieveCriteria == null) {
+            throw new IllegalStateException();
+        }
+        return retrieveCriteria;
     }
 }

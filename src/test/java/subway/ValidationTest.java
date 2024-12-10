@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import subway.domain.Criteria;
 import subway.domain.Station;
 import subway.domain.Vertex;
 import subway.exception.ExceptionMessages;
@@ -24,7 +25,7 @@ public class ValidationTest {
     void 출발역의_상행_방향에_도착역이_없을경우_예외가_발생한다() {
         Station startStation = StationRepository.findStationByName("매봉역");
         Station endStation = StationRepository.findStationByName("양재역");
-        assertThatThrownBy(() -> retrieveService.retrieveShortestPath(startStation, endStation, Vertex::getDistance))
+        assertThatThrownBy(() -> retrieveService.retrieveShortestPath(startStation, endStation, Criteria.DISTANCE))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(ExceptionMessages.UNCONNECTED_STATIONS.getMessage());
     }

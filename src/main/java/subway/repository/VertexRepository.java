@@ -32,6 +32,12 @@ public class VertexRepository {
         Queue<Station> startStations = new LinkedList();
         visitedStations.add(firstStation);
         startStations.add(firstStation);
+        return updateVertexesUntilStationIsOver(availablePaths, visitedStations, startStations);
+    }
+
+    private static List<Vertex> updateVertexesUntilStationIsOver(List<Vertex> availablePaths,
+                                                                 List<Station> visitedStations,
+                                                                 Queue<Station> startStations) {
         while (!startStations.isEmpty()) {
             Station startStation = startStations.poll();
             for (Vertex vertex : vertexes) {
@@ -42,6 +48,7 @@ public class VertexRepository {
         }
         return availablePaths;
     }
+
 
     private static void updateAvailableStatus(List<Vertex> availablePaths, List<Station> visitedStations,
                                               Queue<Station> startStations, Vertex vertex) {

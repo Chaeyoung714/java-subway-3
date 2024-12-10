@@ -2,10 +2,10 @@ package subway.service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Function;
 import org.jgrapht.alg.shortestpath.DijkstraShortestPath;
 import org.jgrapht.graph.DefaultWeightedEdge;
 import org.jgrapht.graph.WeightedMultigraph;
+import subway.domain.Criteria;
 import subway.domain.Station;
 import subway.domain.Vertex;
 import subway.dto.EstimationDto;
@@ -24,14 +24,18 @@ public class RetrieveService {
         this.subwayGraph = new WeightedMultigraph(DefaultWeightedEdge.class);
     }
 
-    public List<Vertex> retrieveShortestPath(Station startStation, Station endStation, Function<Vertex, Integer> criteria) {
+    public List<Vertex> retrieveShortestPath(Station startStation, Station endStation, Criteria criteria) {
         List<Vertex> availableStations = findAvailableVertexesBetween(startStation, endStation);
-        availableStations.forEach((vertex) -> {
-            subwayGraph.setEdgeWeight(subwayGraph.addEdge(vertex.getStartStationName(), vertex.getEndStationName()), criteria.apply(vertex));
-        });
+        setEdgeInformation(availableStations, criteria);
         DijkstraShortestPath dijkstraShortestPath = new DijkstraShortestPath(subwayGraph);
         List<String> shortestPath = dijkstraShortestPath.getPath(startStation.getName(), endStation.getName()).getVertexList();
         return transferToVertex(shortestPath);
+    }
+
+    private void setEdgeInformation(List<Vertex> availableStations, Criteria criteria) {
+        availableStations.forEach((vertex) -> {
+            subwayGraph.setEdgeWeight(subwayGraph.addEdge(vertex.getStartStationName(), vertex.getEndStationName()), criteria.apply(vertex));
+        });
     }
 
     private List<Vertex> findAvailableVertexesBetween(Station startStation, Station endStation) {

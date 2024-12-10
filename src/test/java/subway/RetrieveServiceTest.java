@@ -9,6 +9,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+import subway.domain.Criteria;
 import subway.domain.Station;
 import subway.domain.Vertex;
 import subway.dto.EstimationDto;
@@ -39,7 +40,7 @@ public class RetrieveServiceTest {
         Station startStation = StationRepository.findStationByName(startName);
         Station endStation = StationRepository.findStationByName(endName);
 
-        List<Vertex> shortestPath = retrieveService.retrieveShortestPath(startStation, endStation, Vertex::getDistance);
+        List<Vertex> shortestPath = retrieveService.retrieveShortestPath(startStation, endStation, Criteria.DISTANCE);
         List<String> vertexes = shortestPath.stream()
                 .map(v -> String.join(",", v.getStartStationName(), v.getEndStationName()))
                 .collect(Collectors.toList());
@@ -58,7 +59,7 @@ public class RetrieveServiceTest {
         Station startStation = StationRepository.findStationByName(startName);
         Station endStation = StationRepository.findStationByName(endName);
 
-        List<Vertex> shortestPath = retrieveService.retrieveShortestPath(startStation, endStation, Vertex::getTime);
+        List<Vertex> shortestPath = retrieveService.retrieveShortestPath(startStation, endStation, Criteria.TIME);
         List<String> vertexes = shortestPath.stream()
                 .map(v -> String.join(",", v.getStartStationName(), v.getEndStationName()))
                 .collect(Collectors.toList());
