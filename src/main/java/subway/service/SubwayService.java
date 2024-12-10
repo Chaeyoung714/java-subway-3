@@ -4,6 +4,7 @@ import java.util.List;
 import subway.domain.Line;
 import subway.domain.Station;
 import subway.domain.Vertex;
+import subway.dto.StationDto;
 import subway.repository.LineRepository;
 import subway.repository.StationRepository;
 import subway.repository.VertexRepository;
@@ -15,6 +16,7 @@ public class SubwayService {
         registerLine();
         registerVertex();
     }
+
     private void registerStation() {
         StationRepository.addStation(new Station("교대역"));
         StationRepository.addStation(new Station("강남역"));
@@ -32,26 +34,39 @@ public class SubwayService {
     }
 
     private void registerVertex() {
-        VertexRepository.addVertex(new Vertex(LineRepository.findLineByName("2호선"),
-                List.of(StationRepository.findStationByName("교대역"), StationRepository.findStationByName("강남역"))
+        VertexRepository.addVertex(new Vertex(LineRepository.findLineByName("2호선")
+                , StationRepository.findStationByName("교대역")
+                , StationRepository.findStationByName("강남역")
                 , 2, 3));
-        VertexRepository.addVertex(new Vertex(LineRepository.findLineByName("2호선"),
-                List.of(StationRepository.findStationByName("강남역"), StationRepository.findStationByName("역삼역"))
+        VertexRepository.addVertex(new Vertex(LineRepository.findLineByName("2호선")
+                , StationRepository.findStationByName("강남역")
+                , StationRepository.findStationByName("역삼역")
                 , 2, 3));
-        VertexRepository.addVertex(new Vertex(LineRepository.findLineByName("3호선"),
-                List.of(StationRepository.findStationByName("교대역"), StationRepository.findStationByName("남부터미널역"))
+        VertexRepository.addVertex(new Vertex(LineRepository.findLineByName("3호선")
+                , StationRepository.findStationByName("교대역")
+                , StationRepository.findStationByName("남부터미널역")
                 , 3, 2));
-        VertexRepository.addVertex(new Vertex(LineRepository.findLineByName("3호선"),
-                List.of(StationRepository.findStationByName("남부터미널역"), StationRepository.findStationByName("양재역"))
+        VertexRepository.addVertex(new Vertex(LineRepository.findLineByName("3호선")
+                , StationRepository.findStationByName("남부터미널역")
+                , StationRepository.findStationByName("양재역")
                 , 6, 5));
-        VertexRepository.addVertex(new Vertex(LineRepository.findLineByName("3호선"),
-                List.of(StationRepository.findStationByName("양재역"), StationRepository.findStationByName("매봉역"))
+        VertexRepository.addVertex(new Vertex(LineRepository.findLineByName("3호선")
+                , StationRepository.findStationByName("양재역")
+                , StationRepository.findStationByName("매봉역")
                 , 1, 1));
-        VertexRepository.addVertex(new Vertex(LineRepository.findLineByName("신분당선"),
-                List.of(StationRepository.findStationByName("강남역"), StationRepository.findStationByName("양재역"))
+        VertexRepository.addVertex(new Vertex(LineRepository.findLineByName("신분당선")
+                ,StationRepository.findStationByName("강남역")
+                , StationRepository.findStationByName("양재역")
                 , 2, 8));
-        VertexRepository.addVertex(new Vertex(LineRepository.findLineByName("신분당선"),
-                List.of(StationRepository.findStationByName("양재역"), StationRepository.findStationByName("양재시민의숲역"))
+        VertexRepository.addVertex(new Vertex(LineRepository.findLineByName("신분당선")
+                , StationRepository.findStationByName("양재역")
+                , StationRepository.findStationByName("양재시민의숲역")
                 , 10, 3));
+    }
+
+    public StationDto registerDestination(String startStation, String endStation) {
+        //TODO : 검증 추가, 다른 데로 이동
+        return new StationDto(StationRepository.findStationByName(startStation),
+                StationRepository.findStationByName(endStation));
     }
 }

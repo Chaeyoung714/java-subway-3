@@ -1,16 +1,17 @@
 package subway.domain;
 
-import java.util.List;
 
 public class Vertex {
     private final Line line;
-    private final List<Station> stations;
+    private final Station startStation;
+    private final Station endStation;
     private final int distance;
     private final int time;
 
-    public Vertex(Line line, List<Station> stations, int distance, int time) {
+    public Vertex(Line line, Station startStation, Station endStation, int distance, int time) {
         this.line = line;
-        this.stations = stations;
+        this.startStation = startStation;
+        this.endStation = endStation;
         this.distance = distance;
         this.time = time;
     }
@@ -19,8 +20,12 @@ public class Vertex {
         return line;
     }
 
-    public List<Station> getStations() {
-        return stations;
+    public Station getStartStation() {
+        return startStation;
+    }
+
+    public Station getEndStation() {
+        return endStation;
     }
 
     public int getDistance() {
@@ -29,5 +34,13 @@ public class Vertex {
 
     public int getTime() {
         return time;
+    }
+
+    public String getStartStationName() {
+        return startStation.getName();
+    }
+
+    public String getEndStationName() {
+        return endStation.getName();
     }
 }

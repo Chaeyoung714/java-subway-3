@@ -3,6 +3,7 @@ package subway.repository;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import subway.domain.Station;
 import subway.domain.Vertex;
 
 public class VertexRepository {
@@ -22,5 +23,12 @@ public class VertexRepository {
 
     public static void deleteAll() {
         vertexes.clear();
+    }
+
+    public static Vertex findByStations(Station startStation, Station endStation) {
+        return vertexes.stream()
+                .filter(v -> v.getStartStation().equals(startStation) && v.getEndStation().equals(endStation))
+                .findFirst()
+                .orElseThrow(IllegalStateException::new);
     }
 }
