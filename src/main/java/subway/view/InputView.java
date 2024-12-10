@@ -17,7 +17,7 @@ public class InputView {
         return scanner.nextLine();
     }
 
-    public String readPathwayChoice() {
+    public String readRetrieveChoice() {
         System.out.println(System.lineSeparator() + "## 경로 기준\n"
                 + "1. 최단 거리\n"
                 + "2. 최소 시간\n"

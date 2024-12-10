@@ -2,6 +2,8 @@ package subway.view;
 
 
 import subway.exception.RetryHandler;
+import subway.view.answer.FunctionChoice;
+import subway.view.answer.RetrieveChoice;
 
 public class InputHandler {
     private final InputView inputView;
@@ -10,19 +12,19 @@ public class InputHandler {
         this.inputView = inputView;
     }
 
-    public String readFunctionChoice() {
+    public FunctionChoice readFunctionChoice() {
         return RetryHandler.retryUntilSuccessAndReturn(() -> {
             String answer = inputView.readFunctionChoice();
-            //TODO : 검증추가
-            return answer;
+            InputValidator.validateFunctionChoice(answer);
+            return FunctionChoice.findByInputValue(answer);
         });
     }
 
-    public String readPathwayChoice() {
+    public RetrieveChoice readRetrieveChoice() {
         return RetryHandler.retryUntilSuccessAndReturn(() -> {
-            String answer = inputView.readPathwayChoice();
-            //TODO : 검증추가
-            return answer;
+            String answer = inputView.readRetrieveChoice();
+            InputValidator.validateRetrieveChoice(answer);
+            return RetrieveChoice.findByInputValue(answer);
         });
     }
 

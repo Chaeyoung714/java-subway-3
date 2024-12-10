@@ -65,8 +65,14 @@ public class SubwayService {
     }
 
     public StationDto registerDestination(String startStation, String endStation) {
-        //TODO : 검증 추가, 다른 데로 이동
-        return new StationDto(StationRepository.findStationByName(startStation),
-                StationRepository.findStationByName(endStation));
+        try {
+            if (startStation.equals(endStation)) {
+                throw new IllegalArgumentException("출발역과 도착역이 동일합니다.");
+            }
+            return new StationDto(StationRepository.findStationByName(startStation),
+                    StationRepository.findStationByName(endStation));
+        } catch (IllegalStateException e) {
+            throw new IllegalArgumentException("존재하지 않는 역입니다.");
+        }
     }
 }

@@ -5,10 +5,13 @@ import subway.domain.Vertex;
 import subway.dto.EstimationDto;
 import subway.dto.StationDto;
 import subway.exception.ErrorHandler;
+import subway.exception.RetryHandler;
 import subway.service.RetrieveService;
 import subway.service.SubwayService;
 import subway.view.InputHandler;
 import subway.view.OutputView;
+import subway.view.answer.FunctionChoice;
+import subway.view.answer.RetrieveChoice;
 
 public class SubwayController {
     private final InputHandler inputHandler;
@@ -31,45 +34,47 @@ public class SubwayController {
 
     private void doOneService() {
         while (true) {
-            String choice = inputHandler.readFunctionChoice();
-            if (choice.equals("1")) {
-                doPathwayService(); //TODO : 예외처리 추가
+            FunctionChoice choice = inputHandler.readFunctionChoice();
+            if (choice.equals(FunctionChoice.RETRIEVE)) {
+                doRetrieveService(); //TODO : 예외처리 추가
             }
-            if (choice.equals("Q")) {
+            if (choice.equals(FunctionChoice.QUIT)) {
                 return;
             }
         }
     }
 
-    private void doPathwayService() {
-        String choice = inputHandler.readPathwayChoice();
-        if (choice.equals("1") || choice.equals("2")) {
-            List<Vertex> pathway = retrievePathway(choice);
-            EstimationDto estimationDto = retrieveService.estimateTimeAndDistance(pathway);
-            outputView.printRetrieveResult(pathway, estimationDto);
-        }
-        if (choice.equals("B")) {
-            doOneService();
-        }
+    private void doRetrieveService() {
+        RetryHandler.retryUntilSuccess(() -> {
+            RetrieveChoice choice = inputHandler.readRetrieveChoice();
+            if (choice.equals(RetrieveChoice.BY_DISTANCE) || choice.equals(RetrieveChoice.BY_TIME)) {
+                List<Vertex> pathway = retrievePathway(choice);
+                EstimationDto estimationDto = retrieveService.estimateTimeAndDistance(pathway);
+                outputView.printRetrieveResult(pathway, estimationDto);
+            }
+            if (choice.equals(RetrieveChoice.BACK)) {
+                doOneService();
+            }
+        });
     }
 
-    private List<Vertex> retrievePathway(String choice) {
+    private List<Vertex> retrievePathway(RetrieveChoice choice) {
         try {
             String startStation = inputHandler.readStartStation();
             String endStation = inputHandler.readEndStation();
             StationDto stationDto = subwayService.registerDestination(startStation, endStation);
-            if (choice.equals("1")) {
+            if (choice.equals(RetrieveChoice.BY_DISTANCE)) {
                 return retrieveService.retrieveShortestPath(
                         stationDto.getStartStation(), stationDto.getEndStation(), Vertex::getDistance);
             }
-            if (choice.equals("2")) {
+            if (choice.equals(RetrieveChoice.BY_TIME)) {
                 return retrieveService.retrieveShortestPath(
                         stationDto.getStartStation(), stationDto.getEndStation(), Vertex::getTime);
             }
             return null; //TODO : 보완
         } catch (IllegalArgumentException e) {
             ErrorHandler.handleUserError(e);
-            doPathwayService();
+            doRetrieveService();
             return null; //TODO : 보완
         }
     }

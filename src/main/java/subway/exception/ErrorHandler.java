@@ -3,7 +3,7 @@ package subway.exception;
 public class ErrorHandler {
 
     public static void handleUserError(IllegalArgumentException e) {
-        System.out.println("[ERROR] " + e.getMessage());
+        System.out.println(System.lineSeparator() + "[ERROR] " + e.getMessage());
     }
 
     public static void handleSystemError(IllegalStateException e) {
