@@ -4,7 +4,6 @@ import java.util.List;
 import subway.domain.Vertex;
 import subway.dto.EstimationDto;
 import subway.dto.StationDto;
-import subway.exception.ErrorHandler;
 import subway.exception.RetryHandler;
 import subway.service.RetrieveService;
 import subway.service.SubwayService;
@@ -36,7 +35,7 @@ public class SubwayController {
         while (true) {
             FunctionChoice choice = inputHandler.readFunctionChoice();
             if (choice.equals(FunctionChoice.RETRIEVE)) {
-                doRetrieveService(); //TODO : 예외처리 추가
+                doRetrieveService();
             }
             if (choice.equals(FunctionChoice.QUIT)) {
                 return;
@@ -59,23 +58,17 @@ public class SubwayController {
     }
 
     private List<Vertex> retrievePathway(RetrieveChoice choice) {
-        try {
-            String startStation = inputHandler.readStartStation();
-            String endStation = inputHandler.readEndStation();
-            StationDto stationDto = subwayService.registerDestination(startStation, endStation);
-            if (choice.equals(RetrieveChoice.BY_DISTANCE)) {
-                return retrieveService.retrieveShortestPath(
-                        stationDto.getStartStation(), stationDto.getEndStation(), Vertex::getDistance);
-            }
-            if (choice.equals(RetrieveChoice.BY_TIME)) {
-                return retrieveService.retrieveShortestPath(
-                        stationDto.getStartStation(), stationDto.getEndStation(), Vertex::getTime);
-            }
-            return null; //TODO : 보완
-        } catch (IllegalArgumentException e) {
-            ErrorHandler.handleUserError(e);
-            doRetrieveService();
-            return null; //TODO : 보완
+        String firstStation = inputHandler.readFirstStation();
+        String lastStation = inputHandler.readLastStation();
+        StationDto stationDto = subwayService.registerDestination(firstStation, lastStation);
+        if (choice.equals(RetrieveChoice.BY_DISTANCE)) {
+            return retrieveService.retrieveShortestPath(
+                    stationDto.getFirstStation(), stationDto.getLastStation(), Vertex::getDistance);
         }
+        if (choice.equals(RetrieveChoice.BY_TIME)) {
+            return retrieveService.retrieveShortestPath(
+                    stationDto.getFirstStation(), stationDto.getLastStation(), Vertex::getTime);
+        }
+        throw new IllegalStateException();
     }
 }

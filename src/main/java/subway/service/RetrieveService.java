@@ -3,7 +3,6 @@ package subway.service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
-import java.util.function.Supplier;
 import org.jgrapht.alg.shortestpath.DijkstraShortestPath;
 import org.jgrapht.graph.DefaultWeightedEdge;
 import org.jgrapht.graph.WeightedMultigraph;
@@ -25,9 +24,9 @@ public class RetrieveService {
     }
 
     public List<Vertex> retrieveShortestPath(Station startStation, Station endStation, Function<Vertex, Integer> criteria) {
-        //TODO : 기능보완
-        List<Vertex> availableStations = findConnectedPathsBetween(startStation, endStation);
+        List<Vertex> availableStations = findAvailableVertexesBetween(startStation, endStation);
         availableStations.forEach((vertex) -> {
+//            System.out.println(vertex.getStartStationName() + ", " + vertex.getEndStationName() + ", time=" + criteria.apply(vertex));
             subwayGraph.setEdgeWeight(subwayGraph.addEdge(vertex.getStartStationName(), vertex.getEndStationName()), criteria.apply(vertex));
         });
         DijkstraShortestPath dijkstraShortestPath = new DijkstraShortestPath(subwayGraph);
@@ -35,26 +34,21 @@ public class RetrieveService {
         return transferToVertex(shortestPath);
     }
 
-//    public List<Vertex> retrievePathByTime(Station startStation, Station endStation) {
-//        //TODO : 기능보완, 람다로 줄이기
-//        findConnectedPathsBetween(startStation, endStation);
-//        VertexRepository.vertexes().forEach((v) -> {
-//            subwayGraph.setEdgeWeight(subwayGraph.addEdge(v.getStartStationName(), v.getEndStationName()), v.getTime());
-//        });
-//        DijkstraShortestPath dijkstraShortestPath = new DijkstraShortestPath(subwayGraph);
-//        List<String> shortestPath = dijkstraShortestPath.getPath(startStation.getName(), endStation.getName()).getVertexList();
-//        return transferToVertex(shortestPath);
-//    }
-
-    private List<Vertex> findConnectedPathsBetween(Station startStation, Station endStation) {
+    private List<Vertex> findAvailableVertexesBetween(Station startStation, Station endStation) {
         initialize();
         List<Vertex> availableStations = VertexRepository.findAllStationsFromStartStation(startStation);
+//        for (Vertex vertex : availableStations) { //DEBUG
+//            System.out.println(vertex.getStartStationName());
+//            System.out.println(vertex.getEndStationName());
+//        }
         validateConnection(availableStations, endStation);
         availableStations.forEach((vertex) -> {
             if (!subwayGraph.containsVertex(vertex.getStartStationName())) {
+//                System.out.println(vertex.getStartStationName());//DEBUG
                 subwayGraph.addVertex(vertex.getStartStationName());
             }
             if (!subwayGraph.containsVertex(vertex.getEndStationName())) {
+//                System.out.println(vertex.getEndStationName()); //DEBUG
                 subwayGraph.addVertex(vertex.getEndStationName());
             }
         });

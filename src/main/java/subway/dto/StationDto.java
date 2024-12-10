@@ -3,19 +3,19 @@ package subway.dto;
 import subway.domain.Station;
 
 public class StationDto {
-    private final Station startStation;
-    private final Station endStation;
+    private final Station firstStation;
+    private final Station lastStation;
 
-    public StationDto(Station startStation, Station endStation) {
-        this.startStation = startStation;
-        this.endStation = endStation;
+    public StationDto(Station firstStation, Station lastStation) {
+        this.firstStation = firstStation;
+        this.lastStation = lastStation;
     }
 
-    public Station getStartStation() {
-        return startStation;
+    public Station getFirstStation() {
+        return firstStation;
     }
 
-    public Station getEndStation() {
-        return endStation;
+    public Station getLastStation() {
+        return lastStation;
     }
 }

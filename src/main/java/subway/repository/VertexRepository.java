@@ -46,6 +46,7 @@ public class VertexRepository {
     private static void updateAvailableStatus(List<Vertex> availablePaths, List<Station> visitedStations,
                                               Queue<Station> startStations, Vertex vertex) {
         if (visitedStations.contains(vertex.getEndStation())) {
+            availablePaths.add(vertex);
             return;
         }
         startStations.add(vertex.getEndStation());

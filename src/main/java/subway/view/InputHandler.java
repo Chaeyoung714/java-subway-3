@@ -28,17 +28,17 @@ public class InputHandler {
         });
     }
 
-    public String readStartStation() {
+    public String readFirstStation() {
         return RetryHandler.retryUntilSuccessAndReturn(() -> {
-            String answer = inputView.readStartStation();
+            String answer = inputView.readFirstStation();
             //TODO : 검증추가
             return answer;
         });
     }
 
-    public String readEndStation() {
+    public String readLastStation() {
         return RetryHandler.retryUntilSuccessAndReturn(() -> {
-            String answer = inputView.readEndStation();
+            String answer = inputView.readLastStation();
             //TODO : 검증추가
             return answer;
         });

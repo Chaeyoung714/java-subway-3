@@ -26,12 +26,12 @@ public class InputView {
         return scanner.nextLine();
     }
 
-    public String readStartStation() {
+    public String readFirstStation() {
         System.out.println(System.lineSeparator() + "## 출발역을 입력하세요.");
         return scanner.nextLine();
     }
 
-    public String readEndStation() {
+    public String readLastStation() {
         System.out.println(System.lineSeparator() + "## 도착역을 입력하세요.");
         return scanner.nextLine();
     }
