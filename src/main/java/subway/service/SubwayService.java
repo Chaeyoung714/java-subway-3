@@ -1,6 +1,5 @@
 package subway.service;
 
-import java.util.List;
 import subway.domain.Line;
 import subway.domain.Station;
 import subway.domain.Vertex;

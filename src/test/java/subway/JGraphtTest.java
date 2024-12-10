@@ -3,6 +3,7 @@ package subway;
 import org.jgrapht.alg.shortestpath.DijkstraShortestPath;
 import org.jgrapht.graph.DefaultWeightedEdge;
 import org.jgrapht.graph.WeightedMultigraph;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -28,6 +29,7 @@ public class JGraphtTest {
     }
 
     @Test
+    @DisplayName("연결이 아예 안된 정점으로 최소 거리를 구할 시 예외가 발생한다.")
     public void getDijkstraShortestPathWithUnconnectedEdge() {
         WeightedMultigraph<String, DefaultWeightedEdge> graph = new WeightedMultigraph(DefaultWeightedEdge.class);
         graph.addVertex("v1");
