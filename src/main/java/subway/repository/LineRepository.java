@@ -1,9 +1,10 @@
-package subway.domain;
+package subway.repository;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import subway.domain.Line;
 
 public class LineRepository {
     private static final List<Line> lines = new ArrayList<>();
@@ -22,5 +23,12 @@ public class LineRepository {
 
     public static void deleteAll() {
         lines.clear();
+    }
+
+    public static Line findLineByName(String name) {
+        return lines.stream()
+                .filter(l -> l.getName().equals(name))
+                .findFirst()
+                .orElseThrow(IllegalStateException::new);
     }
 }
